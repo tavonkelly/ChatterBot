@@ -1,0 +1,13 @@
+name: ChatterBot
+main: me.xTDKx.CB.ChatterBot
+version: 1.0
+author: xTDKx
+commands:
+  cb:
+    description: ChatterBot command.
+  chatterbot:
+    description: ChatterBot command.
+permissions:
+  chatterbot.use:
+    description: Usage permission for ChatterBot
+    default: true
