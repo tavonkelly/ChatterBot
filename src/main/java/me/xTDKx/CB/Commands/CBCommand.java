@@ -25,7 +25,7 @@ public class CBCommand implements CommandExecutor{
                         sb.append(" ").append(args[i]);
                     }
                     final String input = sb.toString().trim();
-
+                    p.sendMessage(ChatColor.AQUA + "[" + p.getName() + "]" + ChatColor.WHITE + ": " + input);
                     p.sendMessage(ChatColor.AQUA + "ChatterBot is thinking...");
                     if (ChatterBot.sessions.containsKey(p.getName())){
                         final ChatterBotSession cbSession = ChatterBot.sessions.get(p.getName());
