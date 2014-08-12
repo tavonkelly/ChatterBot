@@ -29,6 +29,19 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <artifactSet>
+            <includes>
+              <include>ca.pjer:*</include>
+            </includes>
+          </artifactSet>
+          <relocations>
+            <relocation>
+              <pattern>ca.pjer</pattern>
+              <shadedPattern>me.xTDKx</shadedPattern>
+            </relocation>
+          </relocations>
+        </configuration>
       </plugin>
     </plugins>
   </build>
@@ -38,5 +51,13 @@
       <url>http://repo.bukkit.org/content/groups/public/</url>
     </repository>
   </repositories>
+  <dependencies>
+    <dependency>
+      <groupId>org.bukkit</groupId>
+      <artifactId>bukkit</artifactId>
+      <version>LATEST</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
 </project>
 
