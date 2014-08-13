@@ -25,36 +25,25 @@ public class CBAssign implements CommandExecutor{
         if (sender.hasPermission("chatterbot.admin")){
             if (args.length == 0){
                 sender.sendMessage(ChatterBot.chatterBotName + ChatColor.GRAY + " Help:");
-                sender.sendMessage(ChatColor.AQUA + "/cb assign <player> " + ChatColor.GRAY + "- Make ChatterBot reply to everything a player says");
-                sender.sendMessage(ChatColor.AQUA + "/cb reload " + ChatColor.GRAY + "- Reload ChatterBot's configuration files");
+                sender.sendMessage(ChatColor.AQUA + "/cbassign <player> " + ChatColor.GRAY + "- Make ChatterBot reply to everything a player says");
             } else if (args.length == 1){
                 if (args[0].equalsIgnoreCase("assign")){
-                    sender.sendMessage(ChatterBot.chatterBotName + ChatColor.RED + " Incorrect Usage: /cb assign <player>");
-                } else if (args[0].equalsIgnoreCase("reload")){
-                    plugin.reloadConfig();
-                    sender.sendMessage(ChatterBot.chatterBotName + ChatColor.GRAY + " Configuration reloaded");
+                    if (Bukkit.getPlayer(args[1]) !=null){
+                        Player p = Bukkit.getPlayer(args[1]);
+                        if (assignie.containsKey(p.getName())){
+                            assignie.remove(p.getName());
+                            sender.sendMessage(ChatterBot.chatterBotName + " " + ChatColor.AQUA + p.getName() + ChatColor.GRAY + " has been un-assigned");
+                        }else{
+                            assignie.put(p.getName(), ChatterBot.bot1.createSession());
+                            sender.sendMessage(ChatterBot.chatterBotName + " " + ChatColor.AQUA + p.getName() + ChatColor.GRAY + " has been assigned");
+                        }
+                    }else{
+                        sender.sendMessage(ChatterBot.chatterBotName + ChatColor.RED + "Player not found");
+                    }
                 } else {
                     sender.sendMessage(ChatterBot.chatterBotName + ChatColor.GRAY + " Help:");
-                    sender.sendMessage(ChatColor.AQUA + "/cb assign <player> " + ChatColor.GRAY + "- Make ChatterBot reply to everything a player says");
-                    sender.sendMessage(ChatColor.AQUA + "/cb reload " + ChatColor.GRAY + "- Reload ChatterBot's configuration files");
+                    sender.sendMessage(ChatColor.AQUA + "/cbassign <player> " + ChatColor.GRAY + "- Make ChatterBot reply to everything a player says");
                 }
-            } else if (args.length == 2){
-                if (Bukkit.getPlayer(args[1]) !=null){
-                    Player p = Bukkit.getPlayer(args[1]);
-                    if (assignie.containsKey(p.getName())){
-                        assignie.remove(p.getName());
-                        sender.sendMessage(ChatterBot.chatterBotName + " " + ChatColor.AQUA + p.getName() + ChatColor.GRAY + " has been un-assigned");
-                    }else{
-                        assignie.put(p.getName(), ChatterBot.bot1.createSession());
-                        sender.sendMessage(ChatterBot.chatterBotName + " " + ChatColor.AQUA + p.getName() + ChatColor.GRAY + " has been assigned");
-                    }
-                }else{
-                    sender.sendMessage(ChatterBot.chatterBotName + ChatColor.RED + "Player not found");
-                }
-            } else {
-                sender.sendMessage(ChatterBot.chatterBotName + ChatColor.GRAY + " Help:");
-                sender.sendMessage(ChatColor.AQUA + "/cb assign <player> " + ChatColor.GRAY + "- Make ChatterBot reply to everything a player says");
-                sender.sendMessage(ChatColor.AQUA + "/cb reload " + ChatColor.GRAY + "- Reload ChatterBot's configuration files");
             }
         }else{
             sender.sendMessage(ChatColor.RED + "You don't have permission for this command");
