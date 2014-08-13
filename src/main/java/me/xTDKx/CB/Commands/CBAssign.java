@@ -27,7 +27,6 @@ public class CBAssign implements CommandExecutor{
                 sender.sendMessage(ChatterBot.chatterBotName + ChatColor.GRAY + " Help:");
                 sender.sendMessage(ChatColor.AQUA + "/cbassign <player> " + ChatColor.GRAY + "- Make ChatterBot reply to everything a player says");
             } else if (args.length == 1){
-                if (args[0].equalsIgnoreCase("assign")){
                     if (Bukkit.getPlayer(args[1]) !=null){
                         Player p = Bukkit.getPlayer(args[1]);
                         if (assignie.containsKey(p.getName())){
@@ -40,10 +39,6 @@ public class CBAssign implements CommandExecutor{
                     }else{
                         sender.sendMessage(ChatterBot.chatterBotName + ChatColor.RED + "Player not found");
                     }
-                } else {
-                    sender.sendMessage(ChatterBot.chatterBotName + ChatColor.GRAY + " Help:");
-                    sender.sendMessage(ChatColor.AQUA + "/cbassign <player> " + ChatColor.GRAY + "- Make ChatterBot reply to everything a player says");
-                }
             }
         }else{
             sender.sendMessage(ChatColor.RED + "You don't have permission for this command");
