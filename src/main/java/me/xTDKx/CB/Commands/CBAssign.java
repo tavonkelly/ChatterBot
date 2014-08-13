@@ -27,8 +27,8 @@ public class CBAssign implements CommandExecutor{
                 sender.sendMessage(ChatterBot.chatterBotName + ChatColor.GRAY + " Help:");
                 sender.sendMessage(ChatColor.AQUA + "/cbassign <player> " + ChatColor.GRAY + "- Make ChatterBot reply to everything a player says");
             } else if (args.length == 1){
-                    if (Bukkit.getPlayer(args[1]) !=null){
-                        Player p = Bukkit.getPlayer(args[1]);
+                    if (Bukkit.getPlayer(args[0]) !=null){
+                        Player p = Bukkit.getPlayer(args[0]);
                         if (assignie.containsKey(p.getName())){
                             assignie.remove(p.getName());
                             sender.sendMessage(ChatterBot.chatterBotName + " " + ChatColor.AQUA + p.getName() + ChatColor.GRAY + " has been un-assigned");
