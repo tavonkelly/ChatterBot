@@ -11,6 +11,11 @@ import org.bukkit.entity.Player;
 
 
 public class CBCommand implements CommandExecutor{
+    private ChatterBot plugin;
+
+    public CBCommand(ChatterBot p){
+        plugin = p;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String cmdString, String[] args) {
@@ -18,7 +23,7 @@ public class CBCommand implements CommandExecutor{
             final Player p = (Player) sender;
             if (p.hasPermission("chatterbot.use")){
                 if (args.length == 0){
-                    p.sendMessage(ChatColor.AQUA + "[ChatterBot] " + ChatColor.WHITE + "Correct usage: " + ChatColor.YELLOW + "/cb <message>");
+                    p.sendMessage(ChatterBot.chatterBotName + ChatColor.WHITE + " Correct usage: " + ChatColor.YELLOW + "/cb <message>");
                 }else{
                     StringBuilder sb = new StringBuilder();
                     for (int i = 0 ; i < args.length ; i++){
@@ -26,7 +31,7 @@ public class CBCommand implements CommandExecutor{
                     }
                     final String input = sb.toString().trim();
                     p.sendMessage(ChatColor.AQUA + "[" + p.getName() + "]" + ChatColor.WHITE + ": " + input);
-                    p.sendMessage(ChatColor.AQUA + "ChatterBot is thinking...");
+                    p.sendMessage(ChatColor.AQUA + "Thinking...");
                     if (ChatterBot.sessions.containsKey(p.getName())){
                         final ChatterBotSession cbSession = ChatterBot.sessions.get(p.getName());
 
@@ -43,7 +48,7 @@ public class CBCommand implements CommandExecutor{
                                 Bukkit.getScheduler().runTask(ChatterBot.instance, new Runnable() {
                                     @Override
                                     public void run() {
-                                        p.sendMessage(ChatColor.AQUA + "[ChatterBot]" + ChatColor.WHITE + ": " + sb.toString());
+                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
                                     }
                                 });
                             }
@@ -65,7 +70,7 @@ public class CBCommand implements CommandExecutor{
                                 Bukkit.getScheduler().runTask(ChatterBot.instance, new Runnable() {
                                     @Override
                                     public void run() {
-                                        p.sendMessage(ChatColor.AQUA + "[ChatterBot]" + ChatColor.WHITE + ": " + sb.toString());
+                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
                                     }
                                 });
                             }

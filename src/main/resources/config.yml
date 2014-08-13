@@ -1,0 +1,9 @@
+#########################
+##      ChatterBot     ##
+#########################
+
+# Name displayed in ChatterBot's messages
+ChatterBot Name: '&b[ChatterBot]'
+
+# Format in which ChatterBot speaks
+ChatterBot Format: '%name%&f: %message%'

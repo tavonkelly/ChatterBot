@@ -3,7 +3,9 @@ package me.xTDKx.CB;
 import com.google.code.chatterbotapi.ChatterBotFactory;
 import com.google.code.chatterbotapi.ChatterBotSession;
 import com.google.code.chatterbotapi.ChatterBotType;
+import me.xTDKx.CB.Commands.CBAssign;
 import me.xTDKx.CB.Commands.CBCommand;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -13,6 +15,8 @@ public class ChatterBot extends JavaPlugin{
     public static com.google.code.chatterbotapi.ChatterBot bot1;
 
     public static HashMap<String, ChatterBotSession> sessions = new HashMap<String, ChatterBotSession>();
+
+    public static String chatterBotName;
 
     public static ChatterBot instance;
 
@@ -29,8 +33,15 @@ public class ChatterBot extends JavaPlugin{
             e.printStackTrace();
         }
 
-        getCommand("cb").setExecutor(new CBCommand());
-        getCommand("chatterbot").setExecutor(new CBCommand());
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
+
+        chatterBotName = ChatColor.translateAlternateColorCodes('&', getConfig().getString("ChatterBot Name"));
+
+        getCommand("cb").setExecutor(new CBCommand(this));
+        getCommand("chatterbot").setExecutor(new CBCommand(this));
+        getCommand("cbassign").setExecutor(new CBAssign());
+        getCommand("chatterbotassign").setExecutor(new CBAssign());
     }
 
 }

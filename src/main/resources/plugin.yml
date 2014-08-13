@@ -7,7 +7,14 @@ commands:
     description: ChatterBot command.
   chatterbot:
     description: ChatterBot command.
+  cbassign:
+    description: ChatterBot assign command.
+  chatterbotassign:
+    description: ChatterBot assign command.
 permissions:
   chatterbot.use:
     description: Usage permission for ChatterBot
     default: true
+  chatterbot.admin:
+    description: Permission to assign ChatterBot
+    default: op
