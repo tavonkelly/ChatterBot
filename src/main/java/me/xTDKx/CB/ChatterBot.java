@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class ChatterBot extends JavaPlugin{
+public class ChatterBot extends JavaPlugin {
     public ChatterBotFactory factory;
     public static com.google.code.chatterbotapi.ChatterBot bot1;
 
@@ -27,7 +27,7 @@ public class ChatterBot extends JavaPlugin{
 
     public static ChatterBot instance;
 
-    public ChatterBot(){
+    public ChatterBot() {
         instance = this;
     }
 
@@ -35,17 +35,20 @@ public class ChatterBot extends JavaPlugin{
     private final File configFile = new File(getDataFolder(), "config.yml");
 
     @Override
-    public void onEnable(){
+    public void onEnable() {
 
-        boolean firstrun = !configFile.exists();
-        try
-        {
+        try {
             getDataFolder().mkdirs();
             config = new MainConfig(configFile);
-        }
-        catch(IOException|InvalidConfigurationException e)
-        {
+        } catch (IOException | InvalidConfigurationException e) {
             throw new RuntimeException(e);
+        }
+
+        factory = new ChatterBotFactory();
+        try {
+            bot1 = factory.create(ChatterBotType.CLEVERBOT);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         chatterBotName = ChatColor.translateAlternateColorCodes('&', getConfig().getString("ChatterBot Name"));
@@ -59,25 +62,21 @@ public class ChatterBot extends JavaPlugin{
     }
 
     @Override
-    public FileConfiguration getConfig()
-    {
+    public FileConfiguration getConfig() {
         return config;
     }
+
     @Override
-    public void reloadConfig()
-    {
-        try
-        {
+    public void reloadConfig() {
+        try {
             config.reload(configFile);
-        }
-        catch(IOException|InvalidConfigurationException e)
-        {
+        } catch (IOException | InvalidConfigurationException e) {
             throw new RuntimeException(e);
         }
     }
+
     @Override
-    public void saveDefaultConfig()
-    {
+    public void saveDefaultConfig() {
         reloadConfig();
     }
 

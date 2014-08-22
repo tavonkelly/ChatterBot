@@ -10,38 +10,38 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
-public class CBCommand implements CommandExecutor{
+public class CBCommand implements CommandExecutor {
     private ChatterBot plugin;
 
-    public CBCommand(ChatterBot p){
+    public CBCommand(ChatterBot p) {
         plugin = p;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String cmdString, String[] args) {
-        if (sender instanceof Player){
+        if (sender instanceof Player) {
             final Player p = (Player) sender;
-            if (p.hasPermission("chatterbot.use")){
-                if (args.length == 0){
+            if (p.hasPermission("chatterbot.use")) {
+                if (args.length == 0) {
                     p.sendMessage(ChatterBot.chatterBotName + ChatColor.WHITE + " Correct usage: " + ChatColor.YELLOW + "/cb <message>");
-                }else{
+                } else {
                     StringBuilder sb = new StringBuilder();
-                    for (int i = 0 ; i < args.length ; i++){
+                    for (int i = 0; i < args.length; i++) {
                         sb.append(" ").append(args[i]);
                     }
                     final String input = sb.toString().trim();
                     p.sendMessage(ChatColor.AQUA + "[" + p.getName() + "]" + ChatColor.WHITE + ": " + input);
                     p.sendMessage(ChatColor.AQUA + "Thinking...");
-                    if (ChatterBot.sessions.containsKey(p.getName())){
+                    if (ChatterBot.sessions.containsKey(p.getName())) {
                         final ChatterBotSession cbSession = ChatterBot.sessions.get(p.getName());
 
                         Bukkit.getScheduler().runTaskAsynchronously(ChatterBot.instance, new Runnable() {
                             @Override
                             public void run() {
                                 final StringBuilder sb = new StringBuilder();
-                                try{
+                                try {
                                     sb.append(cbSession.think(input));
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
 
@@ -61,9 +61,9 @@ public class CBCommand implements CommandExecutor{
                             @Override
                             public void run() {
                                 final StringBuilder sb = new StringBuilder();
-                                try{
+                                try {
                                     sb.append(cbSession.think(input));
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     e.printStackTrace();
                                 }
 
@@ -77,10 +77,10 @@ public class CBCommand implements CommandExecutor{
                         });
                     }
                 }
-            }else{
+            } else {
                 p.sendMessage(ChatColor.RED + "You don't have permission for this command.");
             }
-        }else{
+        } else {
             sender.sendMessage(ChatColor.RED + "Only players can use this command.");
         }
 

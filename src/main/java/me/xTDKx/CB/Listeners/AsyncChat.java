@@ -9,26 +9,26 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-public class AsyncChat implements Listener{
+public class AsyncChat implements Listener {
     private ChatterBot plugin;
 
-    public AsyncChat(ChatterBot p){
+    public AsyncChat(ChatterBot p) {
         plugin = p;
     }
 
     @EventHandler
-    public void onChat(final AsyncPlayerChatEvent e){
-        if (!e.isCancelled()){
-            if (CBAssign.assignie.containsKey(e.getPlayer().getName())){
+    public void onChat(final AsyncPlayerChatEvent e) {
+        if (!e.isCancelled()) {
+            if (CBAssign.assignie.containsKey(e.getPlayer().getName())) {
                 final ChatterBotSession cbSession = CBAssign.assignie.get(e.getPlayer().getName());
 
                 Bukkit.getScheduler().runTaskAsynchronously(ChatterBot.instance, new Runnable() {
                     @Override
                     public void run() {
                         final StringBuilder sb = new StringBuilder();
-                        try{
+                        try {
                             sb.append(cbSession.think(e.getMessage()));
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
