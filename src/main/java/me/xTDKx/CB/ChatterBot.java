@@ -6,10 +6,15 @@ import com.google.code.chatterbotapi.ChatterBotType;
 import me.xTDKx.CB.Commands.CBAssign;
 import me.xTDKx.CB.Commands.CBCommand;
 import me.xTDKx.CB.Listeners.AsyncChat;
+import me.xTDKx.CB.Util.MainConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class ChatterBot extends JavaPlugin{
@@ -26,17 +31,22 @@ public class ChatterBot extends JavaPlugin{
         instance = this;
     }
 
+    private MainConfig config;
+    private final File configFile = new File(getDataFolder(), "config.yml");
+
     @Override
     public void onEnable(){
-        factory = new ChatterBotFactory();
-        try {
-            bot1 = factory.create(ChatterBotType.CLEVERBOT);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
-        getConfig().options().copyDefaults(true);
-        saveDefaultConfig();
+        boolean firstrun = !configFile.exists();
+        try
+        {
+            getDataFolder().mkdirs();
+            config = new MainConfig(configFile);
+        }
+        catch(IOException|InvalidConfigurationException e)
+        {
+            throw new RuntimeException(e);
+        }
 
         chatterBotName = ChatColor.translateAlternateColorCodes('&', getConfig().getString("ChatterBot Name"));
 
@@ -46,6 +56,29 @@ public class ChatterBot extends JavaPlugin{
         getCommand("chatterbotassign").setExecutor(new CBAssign(this));
 
         Bukkit.getPluginManager().registerEvents(new AsyncChat(this), this);
+    }
+
+    @Override
+    public FileConfiguration getConfig()
+    {
+        return config;
+    }
+    @Override
+    public void reloadConfig()
+    {
+        try
+        {
+            config.reload(configFile);
+        }
+        catch(IOException|InvalidConfigurationException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void saveDefaultConfig()
+    {
+        reloadConfig();
     }
 
 }

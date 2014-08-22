@@ -1,0 +1,4 @@
+
+ChatterBot-Name: "&b[ChatterBot]"
+
+ChatterBot-Format: "%name%&f: %message%"

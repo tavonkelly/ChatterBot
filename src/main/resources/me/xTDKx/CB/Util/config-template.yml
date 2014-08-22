@@ -1,0 +1,9 @@
+#########################
+##      ChatterBot     ##
+#########################
+
+# Name displayed in ChatterBot's messages
+ChatterBot Name: [%ChatterBot-Name%]
+
+# Format in which ChatterBot speaks
+ChatterBot Format: [%ChatterBot-Format%]
