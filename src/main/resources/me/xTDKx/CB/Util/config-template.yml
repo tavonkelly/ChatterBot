@@ -7,3 +7,9 @@ ChatterBot Name: [%ChatterBot-Name%]
 
 # Format in which ChatterBot speaks
 ChatterBot Format: [%ChatterBot-Format%]
+
+# Should messages players send ChatterBot be shown publicly?
+Loud Mode: [%Loud-Mode%]
+
+# Only used if Loud Mode is enabled
+Loud Format: [%Loud-Format%]

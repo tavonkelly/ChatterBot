@@ -2,3 +2,6 @@
 ChatterBot-Name: "&b[ChatterBot]"
 
 ChatterBot-Format: "%name%&f: %message%"
+
+Loud-Mode: false
+Loud-Format: "&b@%bot% &f%message%"

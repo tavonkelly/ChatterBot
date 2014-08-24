@@ -30,7 +30,11 @@ public class CBCommand implements CommandExecutor {
                         sb.append(" ").append(args[i]);
                     }
                     final String input = sb.toString().trim();
-                    p.sendMessage(ChatColor.AQUA + "[" + p.getName() + "]" + ChatColor.WHITE + ": " + input);
+                    if (plugin.getConfig().getBoolean("Loud Mode")) {
+                        p.chat(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Loud Format").replace("%bot%", ChatterBot.chatterBotName).replace("%message%", input)));
+                    } else {
+                        p.sendMessage(ChatColor.AQUA + "[" + p.getName() + "]" + ChatColor.WHITE + ": " + input);
+                    }
                     p.sendMessage(ChatColor.AQUA + "Thinking...");
                     if (ChatterBot.sessions.containsKey(p.getName())) {
                         final ChatterBotSession cbSession = ChatterBot.sessions.get(p.getName());
@@ -48,7 +52,11 @@ public class CBCommand implements CommandExecutor {
                                 Bukkit.getScheduler().runTask(ChatterBot.instance, new Runnable() {
                                     @Override
                                     public void run() {
-                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                        if (plugin.getConfig().getBoolean("Loud Mode")) {
+                                            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Loud Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                        } else {
+                                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                        }
                                     }
                                 });
                             }
