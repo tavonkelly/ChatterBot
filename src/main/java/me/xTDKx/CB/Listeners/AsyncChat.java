@@ -35,7 +35,7 @@ public class AsyncChat implements Listener {
                         Bukkit.getScheduler().runTask(ChatterBot.instance, new Runnable() {
                             @Override
                             public void run() {
-                                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot-Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
                             }
                         });
                     }

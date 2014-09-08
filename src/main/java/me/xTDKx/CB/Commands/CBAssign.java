@@ -14,12 +14,6 @@ import java.util.HashMap;
 public class CBAssign implements CommandExecutor {
     public static HashMap<String, ChatterBotSession> assignie = new HashMap<String, ChatterBotSession>();
 
-    private ChatterBot plugin;
-
-    public CBAssign(ChatterBot p) {
-        plugin = p;
-    }
-
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String cmdString, String[] args) {
         if (sender.hasPermission("chatterbot.admin")) {

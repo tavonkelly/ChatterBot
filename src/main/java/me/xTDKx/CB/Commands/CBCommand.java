@@ -30,8 +30,8 @@ public class CBCommand implements CommandExecutor {
                         sb.append(" ").append(args[i]);
                     }
                     final String input = sb.toString().trim();
-                    if (plugin.getConfig().getBoolean("Loud Mode")) {
-                        p.chat(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Loud Format").replace("%bot%", ChatterBot.chatterBotName).replace("%message%", input)));
+                    if (plugin.getConfig().getBoolean("Loud-Mode")) {
+                        p.chat(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Loud-Format").replace("%bot%", ChatterBot.chatterBotName).replace("%message%", input)));
                     } else {
                         p.sendMessage(ChatColor.AQUA + "[" + p.getName() + "]" + ChatColor.WHITE + ": " + input);
                     }
@@ -52,10 +52,10 @@ public class CBCommand implements CommandExecutor {
                                 Bukkit.getScheduler().runTask(ChatterBot.instance, new Runnable() {
                                     @Override
                                     public void run() {
-                                        if (plugin.getConfig().getBoolean("Loud Mode")) {
-                                            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Loud Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                        if (plugin.getConfig().getBoolean("Loud-Mode")) {
+                                            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Loud-Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
                                         } else {
-                                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot-Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
                                         }
                                     }
                                 });
@@ -78,7 +78,11 @@ public class CBCommand implements CommandExecutor {
                                 Bukkit.getScheduler().runTask(ChatterBot.instance, new Runnable() {
                                     @Override
                                     public void run() {
-                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                        if (plugin.getConfig().getBoolean("Loud-Mode")) {
+                                            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("Loud-Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                        } else {
+                                            p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot-Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                        }
                                     }
                                 });
                             }

@@ -51,12 +51,12 @@ public class ChatterBot extends JavaPlugin {
             e.printStackTrace();
         }
 
-        chatterBotName = ChatColor.translateAlternateColorCodes('&', getConfig().getString("ChatterBot Name"));
+        chatterBotName = ChatColor.translateAlternateColorCodes('&', getConfig().getString("ChatterBot-Name"));
 
         getCommand("cb").setExecutor(new CBCommand(this));
         getCommand("chatterbot").setExecutor(new CBCommand(this));
-        getCommand("cbassign").setExecutor(new CBAssign(this));
-        getCommand("chatterbotassign").setExecutor(new CBAssign(this));
+        getCommand("cbassign").setExecutor(new CBAssign());
+        getCommand("chatterbotassign").setExecutor(new CBAssign());
 
         Bukkit.getPluginManager().registerEvents(new AsyncChat(this), this);
     }
