@@ -5,3 +5,13 @@ ChatterBot-Format: "%name%&f: %message%"
 
 Loud-Mode: false
 Loud-Format: "&b@ChatterBot &f%message%"
+
+Trigger-Words: false
+
+Trigger-Word-Timeout: 30
+
+Trigger-Word-List:
+- 'Jim'
+- 'OP'
+- 'Staff'
+- 'ChatterBot'

@@ -13,3 +13,12 @@ Loud-Mode: [%Loud-Mode%]
 
 # What is shown when a player ChatterBot a question (while on loud mode)
 Loud-Format: [%Loud-Format%]
+
+# ChatterBot will be assigned to a player for a certain amount of time if a trigger word is said
+Trigger-Words: [%Trigger-Words%]
+
+# How many seconds ChatterBot will be assigned to a player after they've said a trigger word
+Trigger-Word-Timeout: [%Trigger-Word-Timeout%]
+
+# List of words that enable ChatterBot when said in chat
+Trigger-Word-List: [%Trigger-Word-List%]
