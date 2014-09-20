@@ -11,5 +11,5 @@ ChatterBot-Format: [%ChatterBot-Format%]
 # Should messages players send ChatterBot be shown publicly?
 Loud-Mode: [%Loud-Mode%]
 
-# Only used if Loud Mode is enabled
+# What is shown when a player ChatterBot a question (while on loud mode)
 Loud-Format: [%Loud-Format%]

@@ -19,28 +19,28 @@ public class AsyncChat implements Listener {
     @EventHandler
     public void onChat(final AsyncPlayerChatEvent e) {
         if (!e.isCancelled()) {
-            if (CBAssign.assignie.containsKey(e.getPlayer().getName())) {
-                final ChatterBotSession cbSession = CBAssign.assignie.get(e.getPlayer().getName());
+                if (CBAssign.assignie.containsKey(e.getPlayer().getName())) {
+                    final ChatterBotSession cbSession = CBAssign.assignie.get(e.getPlayer().getName());
 
-                Bukkit.getScheduler().runTaskAsynchronously(ChatterBot.instance, new Runnable() {
-                    @Override
-                    public void run() {
-                        final StringBuilder sb = new StringBuilder();
-                        try {
-                            sb.append(cbSession.think(e.getMessage()));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        Bukkit.getScheduler().runTask(ChatterBot.instance, new Runnable() {
-                            @Override
-                            public void run() {
-                                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot-Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                    Bukkit.getScheduler().runTaskAsynchronously(ChatterBot.instance, new Runnable() {
+                        @Override
+                        public void run() {
+                            final StringBuilder sb = new StringBuilder();
+                            try {
+                                sb.append(cbSession.think(e.getMessage()));
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        });
-                    }
-                });
-            }
+
+                            Bukkit.getScheduler().runTask(ChatterBot.instance, new Runnable() {
+                                @Override
+                                public void run() {
+                                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot-Format").replace("%bot%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                }
+                            });
+                        }
+                    });
+                }
         }
     }
 
