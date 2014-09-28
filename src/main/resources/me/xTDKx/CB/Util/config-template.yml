@@ -22,3 +22,10 @@ Trigger-Word-Timeout: [%Trigger-Word-Timeout%]
 
 # List of words that enable ChatterBot when said in chat
 Trigger-Word-List: [%Trigger-Word-List%]
+
+# Change the type of bot ChatterBot uses
+# Options:
+# - CLEVERBOT
+# - JABBERWACKY
+# - PANDORABOTS
+ChatterBot-Type: [%ChatterBot-Type%]

@@ -46,7 +46,7 @@ public class ChatterBot extends JavaPlugin {
 
         factory = new ChatterBotFactory();
         try {
-            bot1 = factory.create(ChatterBotType.CLEVERBOT);
+            bot1 = factory.create(ChatterBotType.valueOf(getConfig().getString("ChatterBot-Type")));
         } catch (Exception e) {
             e.printStackTrace();
         }
