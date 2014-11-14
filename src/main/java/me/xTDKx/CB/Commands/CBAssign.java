@@ -2,6 +2,8 @@ package me.xTDKx.CB.Commands;
 
 import com.google.code.chatterbotapi.ChatterBotSession;
 import me.xTDKx.CB.ChatterBot;
+import me.xTDKx.CB.Events.BotAssignEvent;
+import me.xTDKx.CB.Events.BotUnAssignEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -24,11 +26,17 @@ public class CBAssign implements CommandExecutor {
                 if (Bukkit.getPlayer(args[0]) != null) {
                     Player p = Bukkit.getPlayer(args[0]);
                     if (assignie.containsKey(p.getName())) {
-                        assignie.remove(p.getName());
-                        sender.sendMessage(ChatterBot.chatterBotName + " " + ChatColor.AQUA + p.getName() + ChatColor.GRAY + " has been un-assigned");
+                        BotUnAssignEvent event = new BotUnAssignEvent(sender, p, assignie.get(p.getName()));
+                        if (!event.isCancelled()) {
+                            assignie.remove(event.getUnAssigned().getName());
+                            sender.sendMessage(ChatterBot.chatterBotName + " " + ChatColor.AQUA + p.getName() + ChatColor.GRAY + " has been un-assigned");
+                        }
                     } else {
-                        assignie.put(p.getName(), ChatterBot.bot1.createSession());
-                        sender.sendMessage(ChatterBot.chatterBotName + " " + ChatColor.AQUA + p.getName() + ChatColor.GRAY + " has been assigned");
+                        BotAssignEvent event = new BotAssignEvent(sender, p, ChatterBot.bot1.createSession());
+                        if (!event.isCancelled()) {
+                            assignie.put(event.getAssingedTo().getName(), event.getSession());
+                            event.getCommandSender().sendMessage(ChatterBot.chatterBotName + " " + ChatColor.AQUA + p.getName() + ChatColor.GRAY + " has been assigned");
+                        }
                     }
                 } else {
                     sender.sendMessage(ChatterBot.chatterBotName + ChatColor.RED + "Player not found");

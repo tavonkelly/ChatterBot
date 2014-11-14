@@ -3,6 +3,8 @@ package me.xTDKx.CB.Listeners;
 import com.google.code.chatterbotapi.ChatterBotSession;
 import me.xTDKx.CB.ChatterBot;
 import me.xTDKx.CB.Commands.CBAssign;
+import me.xTDKx.CB.Events.BotAutoActivateEvent;
+import me.xTDKx.CB.Events.BotAutoDeactivateEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -73,27 +75,31 @@ public class AsyncChat implements Listener {
                         } else {
                             final ChatterBotSession cbSession = ChatterBot.bot1.createSession();
 
-                            triggered.put(e.getPlayer().getName(), System.currentTimeMillis() + (ChatterBot.instance.getConfig().getInt("Trigger-Word-Timeout") * 1000));
-                            sessions.put(e.getPlayer().getName(), cbSession);
+                            final BotAutoActivateEvent event = new BotAutoActivateEvent(e.getPlayer(), cbSession, new String[]{word});
+                            if (!event.isCancelled()) {
 
-                            Bukkit.getScheduler().runTaskAsynchronously(ChatterBot.instance, new Runnable() {
-                                @Override
-                                public void run() {
-                                    final StringBuilder sb = new StringBuilder();
-                                    try {
-                                        sb.append(cbSession.think(e.getMessage()));
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+                                triggered.put(event.getPlayer().getName(), System.currentTimeMillis() + (ChatterBot.instance.getConfig().getInt("Trigger-Word-Timeout") * 1000));
+                                sessions.put(event.getPlayer().getName(), event.getSession());
 
-                                    Bukkit.getScheduler().runTask(ChatterBot.instance, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot-Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                Bukkit.getScheduler().runTaskAsynchronously(ChatterBot.instance, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        final StringBuilder sb = new StringBuilder();
+                                        try {
+                                            sb.append(event.getSession().think(e.getMessage()));
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
                                         }
-                                    });
-                                }
-                            });
+
+                                        Bukkit.getScheduler().runTask(ChatterBot.instance, new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot-Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                            }
+                                        });
+                                    }
+                                });
+                            }
                         }
 
                         return;
@@ -123,6 +129,10 @@ public class AsyncChat implements Listener {
                                 });
                             }
                         });
+                    } else {
+                        new BotAutoDeactivateEvent(e.getPlayer(), sessions.get(e.getPlayer().getName()));
+                        triggered.remove(e.getPlayer().getName());
+                        sessions.remove(e.getPlayer().getName());
                     }
                 }
             }
