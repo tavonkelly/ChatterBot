@@ -48,45 +48,19 @@ public class AsyncChat implements Listener {
                 });
             } else {
                 for (String word : ChatterBot.instance.getConfig().getStringList("Trigger-Word-List")) {
-                    if (e.getMessage().toLowerCase().contains(word.toLowerCase())) {
-                        if (triggered.containsKey(e.getPlayer().getName())) {
-                            triggered.put(e.getPlayer().getName(), System.currentTimeMillis() + (ChatterBot.instance.getConfig().getInt("Trigger-Word-Timeout") * 1000));
+                    for (String sentenceWord : e.getMessage().split(" ")) {
+                        if (sentenceWord.equalsIgnoreCase(word)) {
+                            if (triggered.containsKey(e.getPlayer().getName())) {
+                                triggered.put(e.getPlayer().getName(), System.currentTimeMillis() + (ChatterBot.instance.getConfig().getInt("Trigger-Word-Timeout") * 1000));
 
-                            final ChatterBotSession cbSession = sessions.get(e.getPlayer().getName());
-
-                            Bukkit.getScheduler().runTaskAsynchronously(ChatterBot.instance, new Runnable() {
-                                @Override
-                                public void run() {
-                                    final StringBuilder sb = new StringBuilder();
-                                    try {
-                                        sb.append(cbSession.think(e.getMessage()));
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
-
-                                    Bukkit.getScheduler().runTask(ChatterBot.instance, new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot-Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
-                                        }
-                                    });
-                                }
-                            });
-                        } else {
-                            final ChatterBotSession cbSession = ChatterBot.bot1.createSession();
-
-                            final BotAutoActivateEvent event = new BotAutoActivateEvent(e.getPlayer(), cbSession, new String[]{word});
-                            if (!event.isCancelled()) {
-
-                                triggered.put(event.getPlayer().getName(), System.currentTimeMillis() + (ChatterBot.instance.getConfig().getInt("Trigger-Word-Timeout") * 1000));
-                                sessions.put(event.getPlayer().getName(), event.getSession());
+                                final ChatterBotSession cbSession = sessions.get(e.getPlayer().getName());
 
                                 Bukkit.getScheduler().runTaskAsynchronously(ChatterBot.instance, new Runnable() {
                                     @Override
                                     public void run() {
                                         final StringBuilder sb = new StringBuilder();
                                         try {
-                                            sb.append(event.getSession().think(e.getMessage()));
+                                            sb.append(cbSession.think(e.getMessage()));
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
@@ -99,10 +73,38 @@ public class AsyncChat implements Listener {
                                         });
                                     }
                                 });
-                            }
-                        }
+                            } else {
+                                final ChatterBotSession cbSession = ChatterBot.bot1.createSession();
 
-                        return;
+                                final BotAutoActivateEvent event = new BotAutoActivateEvent(e.getPlayer(), cbSession, new String[]{word});
+                                if (!event.isCancelled()) {
+
+                                    triggered.put(event.getPlayer().getName(), System.currentTimeMillis() + (ChatterBot.instance.getConfig().getInt("Trigger-Word-Timeout") * 1000));
+                                    sessions.put(event.getPlayer().getName(), event.getSession());
+
+                                    Bukkit.getScheduler().runTaskAsynchronously(ChatterBot.instance, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            final StringBuilder sb = new StringBuilder();
+                                            try {
+                                                sb.append(event.getSession().think(e.getMessage()));
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            Bukkit.getScheduler().runTask(ChatterBot.instance, new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("ChatterBot-Format").replace("%name%", ChatterBot.chatterBotName).replace("%message%", sb.toString())));
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            }
+
+                            return;
+                        }
                     }
                 }
 
