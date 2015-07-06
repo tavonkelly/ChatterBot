@@ -1,7 +1,7 @@
 name: ChatterBot
 main: me.xTDKx.CB.ChatterBot
 version: ${project.version}
-author: xTDKx
+author: Teg
 commands:
   cb:
     description: ChatterBot command.
