@@ -50,7 +50,7 @@ public class AsyncChat implements Listener {
         int triggerPlayerAmt = plugin.getConf().getTriggerPlayerAmount();
 
         if (triggerPlayerAmt != -1 && Bukkit.getOnlinePlayers().size() <= triggerPlayerAmt) {
-            session = plugin.getBotController().newSession(player.getUniqueId(), -1);
+            session = plugin.getBotController().newSession(player.getUniqueId(), 5000);
             session.setAutoReply(true);
 
             onChat(e);
