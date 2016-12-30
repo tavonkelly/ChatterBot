@@ -61,11 +61,11 @@ public class CBCommand implements CommandExecutor {
                 if (plugin.getConf().isLoudModeEnabled()) {
                     Bukkit.broadcastMessage(plugin.getConf().getChatFormat()
                             .replace("%name%", plugin.getConf().getBotName())
-                            .replace("%message%", message));
+                            .replace("%message%", response));
                 } else {
                     p.sendMessage(plugin.getConf().getChatFormat()
                             .replace("%name%", plugin.getConf().getBotName())
-                            .replace("%message%", message));
+                            .replace("%message%", response));
                 }
             }
         });

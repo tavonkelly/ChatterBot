@@ -10,8 +10,6 @@ import pw.teg.chatterbot.bot.Session;
 
 public class AsyncChat implements Listener {
     private ChatterBot plugin;
-//    private HashMap<String, Long> triggered = new HashMap<String, Long>();
-//    private HashMap<String, ChatterBotSession> sessions = new HashMap<String, ChatterBotSession>();
 
     public AsyncChat(ChatterBot p) {
         plugin = p;
