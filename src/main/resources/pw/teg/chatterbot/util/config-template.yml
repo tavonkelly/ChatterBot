@@ -11,7 +11,7 @@ ChatterBot-Format: [%ChatterBot-Format%]
 # Should messages players send ChatterBot be shown publicly?
 Loud-Mode: [%Loud-Mode%]
 
-# What is shown when a player ChatterBot a question (while on loud mode)
+# What is shown when a player asks ChatterBot a question (while on loud mode)
 Loud-Format: [%Loud-Format%]
 
 # ChatterBot will be assigned to a player for a certain amount of time if a trigger word is said
@@ -22,6 +22,10 @@ Trigger-Word-Timeout: [%Trigger-Word-Timeout%]
 
 # List of words that enable ChatterBot when said in chat
 Trigger-Word-List: [%Trigger-Word-List%]
+
+# When the amount of players is below this amount ChatterBot is automatically enabled
+# Set this to -1 to disable
+Trigger-Player-Amount: [%Trigger-Player-Amount%]
 
 # Change the type of bot ChatterBot uses
 # Options:

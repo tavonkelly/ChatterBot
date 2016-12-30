@@ -16,4 +16,6 @@ Trigger-Word-List:
 - 'Staff'
 - 'ChatterBot'
 
+Trigger-Player-Amount: -1
+
 ChatterBot-Type: "CLEVERBOT"

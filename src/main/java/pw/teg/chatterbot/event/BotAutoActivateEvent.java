@@ -1,4 +1,4 @@
-package me.xTDKx.CB.Events;
+package pw.teg.chatterbot.event;
 
 import com.google.code.chatterbotapi.ChatterBotSession;
 import org.bukkit.entity.Player;

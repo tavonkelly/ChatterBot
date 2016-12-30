@@ -1,24 +1,21 @@
-package me.xTDKx.CB.Events;
+package pw.teg.chatterbot.event;
 
-import com.google.code.chatterbotapi.ChatterBotSession;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import pw.teg.chatterbot.bot.Session;
 
 public class BotUnAssignEvent extends Event implements Cancellable {
 
     private CommandSender commandSender;
-    private Player unAssigned;
-    private ChatterBotSession session;
+    private Session session;
 
     private boolean cancelled;
     private HandlerList handlerList;
 
-    public BotUnAssignEvent(CommandSender commandSender, Player unAssigned, ChatterBotSession session) {
+    public BotUnAssignEvent(CommandSender commandSender, Session session) {
         this.commandSender = commandSender;
-        this.unAssigned = unAssigned;
         this.session = session;
     }
 
@@ -30,20 +27,8 @@ public class BotUnAssignEvent extends Event implements Cancellable {
         this.commandSender = commandSender;
     }
 
-    public Player getUnAssigned() {
-        return unAssigned;
-    }
-
-    public void setUnAssigned(Player unAssigned) {
-        this.unAssigned = unAssigned;
-    }
-
-    public ChatterBotSession getSession() {
+    public Session getSession() {
         return session;
-    }
-
-    public void setSession(ChatterBotSession session) {
-        this.session = session;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package me.xTDKx.CB.Util;
+package pw.teg.chatterbot.util;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
@@ -11,15 +11,33 @@ import java.util.Map;
 import java.util.Scanner;
 
 public final class MainConfig extends YamlConfiguration {
+    private static YamlConfiguration defconfig = null;
+    private static String template = null;
+    private final Map<String, NodeProcessor> procs = new HashMap<>();
+
     public MainConfig(File f) throws IOException, InvalidConfigurationException {
         reload(f);
     }
 
-    public interface NodeProcessor {
-        Object process(Configuration current, Configuration defaults, String node);
+    private static YamlConfiguration getDefaultConfig() {
+        if (defconfig == null) {
+            defconfig = YamlConfiguration.loadConfiguration
+                    (
+                            new InputStreamReader(MainConfig.class.getResourceAsStream("config-defaults.yml"))
+                    );
+        }
+        return defconfig;
     }
 
-    private final Map<String, NodeProcessor> procs = new HashMap<>();
+    private static String getTemplate() {
+        if (template == null) {
+            template = new Scanner
+                    (
+                            MainConfig.class.getResourceAsStream("config-template.yml")
+                    ).useDelimiter("\\A").next();
+        }
+        return template;
+    }
 
     public NodeProcessor setProcessor(String node, NodeProcessor processor) {
         if (processor == null) {
@@ -75,30 +93,6 @@ public final class MainConfig extends YamlConfiguration {
         load(new CharArrayReader(result.toCharArray()));
     }
 
-    private static YamlConfiguration defconfig = null;
-
-    private static YamlConfiguration getDefaultConfig() {
-        if (defconfig == null) {
-            defconfig = YamlConfiguration.loadConfiguration
-                    (
-                            new InputStreamReader(MainConfig.class.getResourceAsStream("config-defaults.yml"))
-                    );
-        }
-        return defconfig;
-    }
-
-    private static String template = null;
-
-    private static String getTemplate() {
-        if (template == null) {
-            template = new Scanner
-                    (
-                            MainConfig.class.getResourceAsStream("config-template.yml")
-                    ).useDelimiter("\\A").next();
-        }
-        return template;
-    }
-
     @Override
     public String getString(String path) {
         String str = super.getString(path);
@@ -106,5 +100,9 @@ public final class MainConfig extends YamlConfiguration {
             return ChatColor.translateAlternateColorCodes('&', str);
         }
         return str;
+    }
+
+    public interface NodeProcessor {
+        Object process(Configuration current, Configuration defaults, String node);
     }
 }

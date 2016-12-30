@@ -1,5 +1,5 @@
 name: ChatterBot
-main: me.xTDKx.CB.ChatterBot
+main: pw.teg.chatterbot.ChatterBot
 version: ${project.version}
 author: Teg
 commands:

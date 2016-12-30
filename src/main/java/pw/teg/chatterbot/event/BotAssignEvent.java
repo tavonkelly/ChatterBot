@@ -1,6 +1,5 @@
-package me.xTDKx.CB.Events;
+package pw.teg.chatterbot.event;
 
-import com.google.code.chatterbotapi.ChatterBotSession;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -10,16 +9,14 @@ import org.bukkit.event.HandlerList;
 public class BotAssignEvent extends Event implements Cancellable {
 
     private CommandSender commandSender;
-    private Player assingedTo;
-    private ChatterBotSession session;
+    private Player player;
 
     private boolean cancelled;
     private HandlerList handlerList;
 
-    public BotAssignEvent(CommandSender commandSender, Player assingedTo, ChatterBotSession session) {
+    public BotAssignEvent(CommandSender commandSender, Player player) {
         this.commandSender = commandSender;
-        this.assingedTo = assingedTo;
-        this.session = session;
+        this.player = player;
     }
 
     public CommandSender getCommandSender() {
@@ -30,20 +27,12 @@ public class BotAssignEvent extends Event implements Cancellable {
         this.commandSender = commandSender;
     }
 
-    public Player getAssingedTo() {
-        return assingedTo;
+    public Player getPlayer() {
+        return player;
     }
 
-    public void setAssingedTo(Player assingedTo) {
-        this.assingedTo = assingedTo;
-    }
-
-    public ChatterBotSession getSession() {
-        return session;
-    }
-
-    public void setSession(ChatterBotSession session) {
-        this.session = session;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     @Override
