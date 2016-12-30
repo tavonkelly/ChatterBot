@@ -23,7 +23,11 @@ public class ChatterBot extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        boolean success = this.getDataFolder().mkdirs();
+        boolean success = true;
+
+        if (!this.getDataFolder().exists()) {
+            success = this.getDataFolder().mkdirs();
+        }
 
         if (!success) {
             this.getLogger().warning("Could not create config folder. Disabling plugin.");
