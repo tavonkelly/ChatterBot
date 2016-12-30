@@ -78,15 +78,15 @@
   </build>
   <repositories>
     <repository>
-      <id>bukkit-repo</id>
-      <url>http://repo.bukkit.org/content/groups/public/</url>
+      <id>md5-repo</id>
+      <url>http://repo.md-5.net/content/groups/public/</url>
     </repository>
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>bukkit</artifactId>
-      <version>LATEST</version>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.7.10-R0.1-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
