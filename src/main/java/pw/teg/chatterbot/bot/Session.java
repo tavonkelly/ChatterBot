@@ -2,8 +2,9 @@ package pw.teg.chatterbot.bot;
 
 import com.google.code.chatterbotapi.ChatterBotSession;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
+import pw.teg.chatterbot.ChatterBot;
 
+import java.util.Random;
 import java.util.UUID;
 
 public class Session {
@@ -12,6 +13,8 @@ public class Session {
     private ChatterBotSession session;
     private long expireTimestamp;
     private boolean autoReply;
+
+    private static Random random = new Random(System.nanoTime());
 
     public Session(UUID player, ChatterBotSession session, long expireTimestamp, boolean autoReply) {
         this.player = player;
@@ -44,7 +47,12 @@ public class Session {
         this.autoReply = autoReply;
     }
 
-    public void chatMessage(final JavaPlugin plugin, final String message, final ChatCallback callback) {
+    public void chatMessage(final ChatterBot plugin, final String message, final ChatCallback callback) {
+        final boolean delayedResponse = plugin.getConf().isDelayedResponse();
+        int minDelay = Math.max(plugin.getConf().getMinimumDelay(), 1);
+        int maxDelay = Math.max(plugin.getConf().getMaximumDelay(), 1);
+        final int delay = random.nextInt((maxDelay - minDelay) + 1) + minDelay;
+
         Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
             @Override
             public void run() {
@@ -58,12 +66,12 @@ public class Session {
                     return;
                 }
 
-                Bukkit.getScheduler().runTask(plugin, new Runnable() {
+                Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
                     public void run() {
                         callback.callback(response);
                     }
-                });
+                }, delayedResponse ? delay * 20L : 1L);
             }
         });
     }

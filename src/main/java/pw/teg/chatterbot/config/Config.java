@@ -18,6 +18,9 @@ public class Config {
     private Set<String> triggerWordList;
     private int triggerPlayerAmount;
     private ChatterBotType chatterBotType;
+    private boolean delayedResponse;
+    private int minimumDelay;
+    private int maximumDelay;
 
     public Config(MainConfig config) throws Exception {
         reloadConfig(config);
@@ -59,6 +62,18 @@ public class Config {
         return chatterBotType;
     }
 
+    public boolean isDelayedResponse() {
+        return delayedResponse;
+    }
+
+    public int getMinimumDelay() {
+        return minimumDelay;
+    }
+
+    public int getMaximumDelay() {
+        return maximumDelay;
+    }
+
     public void reloadConfig(MainConfig config) throws Exception {
         this.botName = color(config.getString("ChatterBot-Name"));
         this.chatFormat = color(config.getString("ChatterBot-Format"));
@@ -79,6 +94,10 @@ public class Config {
         if (this.chatterBotType == null) {
             throw new Exception("Could not find ChatterBot type: " + config.getString("ChatterBot-Type"));
         }
+
+        this.delayedResponse = config.getBoolean("Delayed-Response-Enabled");
+        this.minimumDelay = config.getInt("Delayed-Minimum-Seconds");
+        this.maximumDelay = config.getInt("Delayed-Maximum-Seconds");
     }
 
     // Helper

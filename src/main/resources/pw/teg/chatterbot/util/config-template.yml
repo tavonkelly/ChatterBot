@@ -32,3 +32,16 @@ Trigger-Player-Amount: [%Trigger-Player-Amount%]
 # - CLEVERBOT
 # - JABBERWACKY
 ChatterBot-Type: [%ChatterBot-Type%]
+
+# Delayed responses help combat players using the bot to cause spam
+#
+# Chatterbot will pick a random amount of time between the minimum and maximum and
+# wait that long before responding (not accounting for the time it takes for the bot to think)
+# Set this to false to disable this feature
+Delayed-Response-Enabled: [%Delayed-Response-Enabled%]
+
+# The minimum amount of time Chatterbot would ever take to respond
+Delayed-Minimum-Seconds: [%Delayed-Minimum-Seconds%]
+
+# The maximum amount of time Chatterbot would ever take to respond
+Delayed-Maximum-Seconds: [%Delayed-Maximum-Seconds%]
