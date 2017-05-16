@@ -56,7 +56,7 @@ public class ChatterBot extends JavaPlugin {
         }
 
         try {
-            this.botController = new BotController(this);
+            this.botController = new BotController();
         } catch (Exception e) {
             this.getLogger().warning("Could not create bot controller: " + e.getMessage());
             this.getLogger().warning("Disabling plugin.");

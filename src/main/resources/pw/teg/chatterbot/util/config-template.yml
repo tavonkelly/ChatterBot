@@ -27,12 +27,6 @@ Trigger-Word-List: [%Trigger-Word-List%]
 # Set this to -1 to disable
 Trigger-Player-Amount: [%Trigger-Player-Amount%]
 
-# Change the type of bot ChatterBot uses
-# Options:
-# - CLEVERBOT
-# - JABBERWACKY
-ChatterBot-Type: [%ChatterBot-Type%]
-
 # Delayed responses help combat players using the bot to cause spam
 #
 # Chatterbot will pick a random amount of time between the minimum and maximum and

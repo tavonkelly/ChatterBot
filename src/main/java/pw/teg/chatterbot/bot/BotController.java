@@ -1,7 +1,7 @@
 package pw.teg.chatterbot.bot;
 
 import com.google.code.chatterbotapi.ChatterBotFactory;
-import pw.teg.chatterbot.ChatterBot;
+import com.google.code.chatterbotapi.ChatterBotType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,13 +9,12 @@ import java.util.UUID;
 
 public class BotController {
 
-    private ChatterBotFactory factory;
     private com.google.code.chatterbotapi.ChatterBot bot;
     private Map<UUID, Session> sessionMap = new HashMap<>();
 
-    public BotController(ChatterBot plugin) throws Exception {
-        factory = new ChatterBotFactory();
-        bot = factory.create(plugin.getConf().getChatterBotType());
+    public BotController() throws Exception {
+        ChatterBotFactory factory = new ChatterBotFactory();
+        bot = factory.create(ChatterBotType.PANDORABOTS, "f52bc2a49e3458fa");
     }
 
     public Session getSessionFor(UUID uuid) {

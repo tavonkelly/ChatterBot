@@ -57,6 +57,10 @@ public class AsyncChat implements Listener {
             return;
         }
 
+        if (!plugin.getConf().isTriggerWordsEnabled()) {
+            return;
+        }
+
         for (String word : plugin.getConf().getTriggerWordList()) {
             for (String token : message.split(" ")) {
                 if (!token.equalsIgnoreCase(word)) {

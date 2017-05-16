@@ -1,6 +1,5 @@
 package pw.teg.chatterbot.config;
 
-import com.google.code.chatterbotapi.ChatterBotType;
 import org.bukkit.ChatColor;
 import pw.teg.chatterbot.util.MainConfig;
 
@@ -17,7 +16,6 @@ public class Config {
     private int triggerWordTimeout;
     private Set<String> triggerWordList;
     private int triggerPlayerAmount;
-    private ChatterBotType chatterBotType;
     private boolean delayedResponse;
     private int minimumDelay;
     private int maximumDelay;
@@ -58,10 +56,6 @@ public class Config {
         return triggerPlayerAmount;
     }
 
-    public ChatterBotType getChatterBotType() {
-        return chatterBotType;
-    }
-
     public boolean isDelayedResponse() {
         return delayedResponse;
     }
@@ -83,18 +77,6 @@ public class Config {
         this.triggerWordTimeout = config.getInt("Trigger-Word-Timeout");
         this.triggerWordList = new HashSet<>(config.getStringList("Trigger-Word-List"));
         this.triggerPlayerAmount = config.getInt("Trigger-Player-Amount");
-
-        for (ChatterBotType type : ChatterBotType.values()) {
-            if (type.name().equalsIgnoreCase(config.getString("ChatterBot-Type"))) {
-                this.chatterBotType = type;
-                break;
-            }
-        }
-
-        if (this.chatterBotType == null) {
-            throw new Exception("Could not find ChatterBot type: " + config.getString("ChatterBot-Type"));
-        }
-
         this.delayedResponse = config.getBoolean("Delayed-Response-Enabled");
         this.minimumDelay = config.getInt("Delayed-Minimum-Seconds");
         this.maximumDelay = config.getInt("Delayed-Maximum-Seconds");
