@@ -1,4 +1,4 @@
 ChatterBot
 ==========
 
-Bringing CleverBot to Minecraft!
+Bringing PandoraBot to Minecraft!
